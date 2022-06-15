@@ -9,7 +9,25 @@ body{
 .main-color{
     color: #D14200 !important;
 }
+.main-colorbg{
+    background-color: #D14200 !important;
+}
 nav ul li a:hover{
     color: #D14200 !important;
     font-weight: bold;
+}
+/* Hero section */
+.parallax{
+    background: url(../img/bg-img2.webp) no-repeat center;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;
+}
+/* .post{
+    background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(../img/featured0.png) no-repeat center;
+    background-size: cover;
+    border-radius: 15px !important;
+} */
+.posts-text:hover{
+    transform: translateY(10%);
 }

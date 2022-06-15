@@ -39,9 +39,9 @@
     <!-- Hero section -->
 
     <section id="hero-section">
-        <div class="container">
+        <div class="container pt-3">
             <div class="row">
-                <div class="col-lg-6 col-md-12">
+                <div class="col-lg-6 col-md-12 mb-4 d-flex justify-content-center align-items-center">
                     <div class="img-div w-100">
                         <img src="img/bg-img1.webp" alt="hero image" class="image-fluid w-100">
                     </div>
@@ -49,8 +49,8 @@
                 <div class="col-lg-6 col-md-12 d-flex justify-content-center align-items-center">
                     <div class="hero-text">
                         <h2 class="text-center pb-4 fw-bold">My thoughts today</h2>
-                        <div class="img2-div w-100">
-                            <img src="img/bg-img2.webp" alt="hero image" class="image-fluid w-100">
+                        <div class="img2-div parallax">
+                            
                         </div>
                         <h4 class="pt-4 pb-2 main-color">Detoxing my social media feed</h4>
                         <p class="fs-6">THis is going to be edited everyday. My plans for today is removing the unimportant people from my social media feed. 
@@ -62,12 +62,35 @@
         </div>
     </section>
 
+    <section id="featured-section">
+        <div class="container">
+            <div class="featured-text  mt-5 mb-5 main-colorbg pt-2 pb-2">
+                <div id ="marquee" class="highest-posts d-flex justify-content-between">
+                    
+                </div>
+            </div>
+            <div class="featured-posts">
+                <div class="row" id="featured" >
+                    
+                </div>
+            </div>
+            <div class="recent-posts mb-5">
+                <h2 class="text-center text-lg-start text-md-start pb-5 fw-bold">Recent Posts</h2>
+                <div class="row" id="recent-posts">
+                      
+                </div>
+            </div>
+        </div>
+    </section>
 
+<!-- Button trigger modal -->
 
+<button class="delete-btn" type="button"></button>
 
 
 
 
   <script src="./js/bootstrap.min.js"></script>  
+  <script src="./js/app.js"></script>
 </body>
 </html>
