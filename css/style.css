@@ -23,11 +23,15 @@ nav ul li a:hover{
     background-attachment: fixed;
     height: 100vh;
 }
-/* .post{
-    background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(../img/featured0.png) no-repeat center;
-    background-size: cover;
-    border-radius: 15px !important;
-} */
+
 .posts-text:hover{
     transform: translateY(10%);
+}
+
+/* Form-section */
+
+@media screen and (min-width:768px){
+    #post-form{
+        width: 70% !important;
+    }
 }
