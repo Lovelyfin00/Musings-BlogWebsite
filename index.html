@@ -8,14 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
-    <!-- CSS only -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/d972efdfc6.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-white navbar-light">
         <div class="container">
-            <a class="navbar-brand text-primary" href="#"><img src="img/logo.png" alt="logo"></a>
+            <a class="navbar-brand text-primary" href="index.html"><img src="img/logo.png" alt="logo"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -24,13 +24,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active main-color fw-bold pe-5" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active main-color fw-bold pe-5" aria-current="page" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark pe-5 fw-4" href="">All Post</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link fw-4 text-dark pe-5">Create a Post</a>
+                        <a class="nav-link text-dark pe-5 fw-4" href="all-posts.html">Create & View posts</a>
                     </li>
                 </ul>
             </div>
@@ -64,15 +61,15 @@
     </section>
     <section id="form-section">
         <div class="container pt-5 pb-5">
-            <h3 class="text-center">Update and Create Post Section</h3>
-            <p class="text-muted pt-3 text-center " style="font-size: 14px !important;">You can create and update posts here. Created post appears in the recent post section</p>
+            <h3 class="text-center">Update Post Section</h3>
+            <p class="text-muted text-center pt-2" style="font-size: 14px !important;">This section is only to update posts. There is an external link to the page to create posts on the header</p>
             <form class="row m-auto" id="post-form">
                 <div class="col-lg-12 pb-4">
                     <label for="title-update" class="form-label">Title</label>
                     <input type="text" class="form-control mb-3" id="title">
                     <label for="body" class="form-label">Enter your text here</label>
                     <textarea class="form-control" id="body" rows="5"></textarea>
-                    <button type="submite" class="btn btn-dark mt-3" id="update" >Create Post</a>
+                    <button type="submite" class="btn btn-dark mt-3" id="update" >Create a Post</a>
                 </div>
             </form>
         </div>
@@ -90,26 +87,57 @@
                     
                 </div>
             </div>
-            <div class="recent-posts mb-5">
-                <h2 class="text-center text-lg-start text-md-start pb-5 fw-bold">Recent Posts</h2>
+            <div class="recent-posts mb-5 mt-5">
+                <h2 class="text-center pt-5 pb-3 text-lg-start text-md-start pb-5 fw-bold">Recent Posts</h2>
                 <div class="row" id="recent-posts">
                       
                 </div>
             </div>
+            <div class="view-all text-center mb-5">
+                <a class="btn view-btn btn-outline-danger" href="all-posts.html">View all Posts</a>
+            </div>
         </div>
     </section>
 
-<!-- Button trigger modal -->
-
-<button class="delete-btn" type="button"></button>
-
+    <footer style="background-color:beige;">
+        <div class="container pt-5 pb-5">
+            <div class="row pt-3 pb-3">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="footer-icon">
+                        <img src="img/logo.png" alt="logo">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="footer-links">
+                        <ul class="list-unstyled text-center">
+                            <li class="pb-2"><a href="index.html" class="text-decoration-none main-color">Home</a></li>
+                            <li class="pb-2"><a href="all-posts.html" class="text-decoration-none main-color">All Posts</a></li>
+                            <li class="pb-2"><a href="all-posts.html" class="text-decoration-none main-color">Create a Post</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="social-links">
+                        <ul class="list-unstyled text-center d-flex justify-content-between">
+                            <li><a href=""><i class="fab fa-facebook-f text-dark"></i></a></li>
+                            <li><a href=""><i class="fab fa-twitter text-dark"></i></a></li>
+                            <li><a href=""><i class="fab fa-instagram text-dark"></i></a></li>
+                            <li><a href=""><i class="fab fa-youtube text-dark"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center ">
+                    <p style="font-size: 14px !important;">&copy; 2023 Omokaro Loveth</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 
 
   <!-- JavaScript Bundle with Popper -->
     <script src="./js/bootstrap.min.js"></script>
   <script src="./js/app.js"></script>
-  <script src="./js/single.js"></script>
 </body>
 </html>
 

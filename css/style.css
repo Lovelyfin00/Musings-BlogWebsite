@@ -1,8 +1,4 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
+
 body{
     font-family: 'Libre Baskerville', serif !important;
 }
@@ -24,11 +20,11 @@ nav ul li a:hover{
     height: 100vh;
 }
 
-.posts-text:hover{
-    transform: translateY(10%);
+.view-btn:hover{
+    color: white !important;
+    background-color: #D14200 !important;
+    border: none !important;
 }
-
-/* Form-section */
 
 @media screen and (min-width:768px){
     #post-form{

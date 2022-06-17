@@ -1,14 +1,31 @@
-// FEATURED POSTS SECTION
 
-// Creating Posts in The FeaturedPost Section with the help of fetch API
+
+// FOR RECENT SECTION
+
 
 let postForm = document.querySelector("#post-form");
 let title = document.querySelector("#title");
 let body = document.querySelector("#body");
-let recentPostBox = [];
+let recentPostWrapper = document.querySelector("#recent-posts");
+let recentBox = [];
 
-postForm.addEventListener('submit', createPost)
+//FETCHING JSONPLACEHOLDER USING GET FOR RECENT POSTS
 
+recentPosts = () => {
+    fetch("https://jsonplaceholder.typicode.com/posts")
+    .then(response => response.json())
+    .then(data => {
+        recentBox = data;
+        recentBox = recentBox.slice(0, 12);
+        recentUI(recentBox) ;
+    })
+    
+}
+recentPosts();
+
+// Creating posts using POST method for recent post
+
+postForm.addEventListener('submit', createPost);
 
 function createPost(e) {
     e.preventDefault();
@@ -27,37 +44,132 @@ function createPost(e) {
         .then((response) => response.json())
         .then((data) => {
             console.log(data)
-            recentPostBox.unshift(data);
+            recentBox.unshift(data);
             let recentPostHolder = '';
-            recentPostBox.forEach(post => {
+            recentBox.forEach(post => {
                 recentPostHolder += `
                     <div class="col-lg-4 col-md-6 mb-5">
-                    <div class="post-body">
-                        <div class="img-post">
-                            <img src="img/post${post.id}.jpg" alt="post images" style="border-radius:15px; height: 33vmax !important;" class="img-fluid w-100 post-images">
+                        <div class="post-body">
+                            <div class="img-post">
+                                <img src="img/post${post.id}.jpg" alt="post images" style="border-radius:15px; height: 33vmax !important;" class="img-fluid w-100 post-images">
+                            </div>
+                            <h5 class="post-title pt-2 pb-2 main-color fw-bold">${post.title}</h5>
+                            <p class="post-body">${post.body}</p>
+                            <div class="btn-div d-flex justify-content-between ">
+                                <button class="btn btn-outline-dark" onclick="readMore(${post.id})">Read More</button>
+                                <button onclick="updatePost(${post.id})" class="btn btn-dark" href="#form-section"> Update</button>
+                                <button class="btn btn-outline-dark" onclick="deletePost(${post.id})">Delete</button>
+                            </div>
                         </div>
-                        <h5 class="post-title pt-2 pb-2 main-color fw-bold">${post.title}</h5>
-                        <p class="post-body">${post.body}</p>
-                        <div class="btn-div d-flex justify-content-between ">
-                            <button class="btn btn-outline-dark" onclick="readMore(${post.id})">Read More</button>
-                            <button onclick="updatePost(${post.id})" class="btn btn-dark" href="#form-section"> Update</button>
-                            <button class="btn btn-outline-dark" onclick="deletePost(${post.id})">Delete</button>
-                       </div>
-                </div>
-                                </div>
+                    </div>
             `
             });
             recentPostWrapper.innerHTML = recentPostHolder;
         })
 }
 
+// Updating Recent posts using PUT METHOD
+
+function updateRecentPost(id) {
+    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            id: id,
+            title: title.value,
+            body: body.value,
+            userId: 1,
+        }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            let postTitles = document.querySelectorAll('.recentPost-title');
+            let postBodies = document.querySelectorAll('.recentPost-body');
+            postTitles.forEach((postTitle, index) => {
+                if (index + 1 === id) {
+                    if (data.title !== "") {
+                        postTitle.innerHTML = data.title
+                    }
+                }
+            })
+            postBodies.forEach((postBody, index) => {
+                if (index + 1 === id) {
+                    if (data.body !== "") {
+                        postBody.innerHTML = data.body
+                    }
+                }
+            })
+        });
+}
+
+
+// Fetching DELETE METHOD for Recent Posts
+
+function recentUI (postsUI) {
+    let recentPostHolder = "";
+        postsUI.forEach(recentPost => {
+            let wordLength = recentPost.body;
+            wordLength = wordLength.slice(0, 90);
+
+            let titleLength = recentPost.title;
+            titleLength = titleLength.slice(0, 30);
+            recentPostHolder += `
+                <div class="col-lg-4 col-md-6 mb-5">
+                    <div class="post-body">
+                        <div class="img-post">
+                            <img src="img/post${recentPost.id}.jpg" alt="post images" style="border-radius:15px; height: 33vmax !important;" class="img-fluid w-100 post-images">
+                        </div>
+                        <h5 class="recentPost-title pt-2 pb-2 main-color fw-bold">${titleLength}</h5>
+                        <p class="recentPost-body">${wordLength}</p>
+                        <div class="btn-div d-flex justify-content-between ">
+                            <button class="btn btn-outline-dark" onclick="readMoreRecent(${recentPost.id})">Read More</button>
+                            <button onclick="updateRecentPost(${recentPost.id})" class="btn btn-dark" href="#form-section"> Update</button>
+                            <button class="btn btn-outline-dark" onclick="deletePostRecent(${recentPost.id})">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `
+        })
+
+        recentPostWrapper.innerHTML = recentPostHolder;
+}
+
+// Calling DELETE posts method for Recent posts
+
+function deletePostRecent(id) {
+    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+        method: 'DELETE',
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            recentBox = recentBox.filter(recentPost => recentPost.id !== id);
+            recentUI(recentBox) ;
+        })
+
+}
+
+// View More For RECENT POSTS
+
+function readMoreRecent(id) {
+    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+            localStorage.setItem('viewedPost', JSON.stringify(data))
+            window.location.href = 'read-more.html';
+            // console.log(data)
+        });
+}
+
+
+
+
+// FEATURED POST SECTION 
 
 // Fetching JsonPlaceHolder for Featured Posts
 
 let featuredWrapper = document.querySelector("#featured");
-
-
-
 let featuredBox = [];
 
 getFeaturedPosts = () => {
@@ -66,16 +178,14 @@ getFeaturedPosts = () => {
     .then(data => {
         featuredBox = data;
         featuredBox = featuredBox.slice(0, 2);
-        featuredUI(featuredBox) ;
+        featuredUI(featuredBox);
     })
     
 }
 getFeaturedPosts();
 
 
-
 // Updating using PUT METHOD for Featured Posts
-
 
 function updatePost(id) {
     console.log(id)
@@ -94,24 +204,21 @@ function updatePost(id) {
     })
         .then((response) => response.json())
         .then((data) => {
-
-            console.log(data)
-            let postTitles = document.querySelectorAll('.post-title') // 100 post titles [0 -99]
-            let postBodies = document.querySelectorAll('.post-body')
-            console.log(postTitles)
-            postTitles.forEach((postTitle, index) => {
+            let Titles = document.querySelectorAll('.post-title');
+            let Bodies = document.querySelectorAll('.post-body');
+            Titles.forEach((Title, index) => {
                 if (index + 1 === id) {
                     if (data.title !== "") {
-                        postTitle.innerHTML = data.title
+                        Title.innerHTML = data.title
                     }
                 }
 
             })
 
-            postBodies.forEach((postBody, index) => {
+            Bodies.forEach((Body, index) => {
                 if (index + 1 === id) {
                     if (data.body !== "") {
-                        postBody.innerHTML = data.body
+                        Body.innerHTML = data.body
                     }
                 }
 
@@ -120,18 +227,16 @@ function updatePost(id) {
         });
 }
 
-
 // Calling DELETE METHOD FOR Featured Posts
 
 function featuredUI (postsUI) {
     let featuredPostHolder = "";
         console.log(featuredBox);
-
         postsUI.forEach(featuredPost => {
             featuredPostHolder += `
                 <div class="col-lg-6 col-md-6 mb-5 d-flex justify-content-center align-items-center">
                     <div class="feature-img">
-                        <img src="../img/featured${featuredPost.id}.png" alt="featiure" class="img-fluid">
+                        <img src="./img/post${featuredPost.id}.jpg" alt="featiure" class="img-fluid">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 d-flex justify-content-center align-items-center mb-5">
@@ -148,9 +253,11 @@ function featuredUI (postsUI) {
             `
         })
 
-        featuredWrapper.innerHTML = featuredPostHolder;
+    featuredWrapper.innerHTML = featuredPostHolder;
 
 }
+
+// Calling DELETE method for Featured Posts
 
 function deletePost(id) {
     fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
@@ -158,132 +265,32 @@ function deletePost(id) {
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
-            featuredBox = featuredBox.filter(featuredPost => featuredPost.id !== id)
+            featuredBox = featuredBox.filter(featuredPost => featuredPost.id !== id);
             console.log(featuredBox)
-            // use a function to display the UI
             featuredUI(featuredBox) ;
         })
 
 }
 
+// View More Button For Featured Posts
 
-
-//FETCHING JSONPLACEHOLDER FOR RECENT POSTS
-
-
-
-
-let recentPostWrapper = document.querySelector("#recent-posts");
-let recentBox = [];
-const url ="https://jsonplaceholder.typicode.com/posts";
-
-recentPosts = () => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-    .then(response => response.json())
-    .then(data => {
-        recentBox = data;
-        recentBox = recentBox.slice(0, 12);
-        recentUI(recentBox) ;
-    })
-    
-}
-recentPosts();
-
-// Updating Recent posts using PUT METHOD
-
-function updateRecentPost(id) {
-    console.log(id)
-
-    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-            id: id,
-            title: title.value,
-            body: body.value,
-            userId: 1,
-        }),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        },
-    })
+function readMore(id) {
+    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
         .then((response) => response.json())
         .then((data) => {
-
             console.log(data)
-            let postTitles = document.querySelectorAll('.recentPost-title') // 100 post titles [0 -99]
-            let postBodies = document.querySelectorAll('.recentPost-body')
-            console.log(postTitles)
-            postTitles.forEach((postTitle, index) => {
-                if (index + 1 === id) {
-                    if (data.title !== "") {
-                        postTitle.innerHTML = data.title
-                    }
-                }
-
-            })
-
-            postBodies.forEach((postBody, index) => {
-                if (index + 1 === id) {
-                    if (data.body !== "") {
-                        postBody.innerHTML = data.body
-                    }
-                }
-
-            })
-
+            localStorage.setItem('viewedPost', JSON.stringify(data))
+            window.location.href = 'read-more.html'
+            // console.log(data)
         });
 }
 
-// Fetching DELETE METHOD for Recent Posts
 
 
-function recentUI (postsUI) {
-    let recentPostHolder = "";
-        console.log(recentBox);
 
-        postsUI.forEach(recentPost => {
-            let wordLength = recentPost.body;
-            wordLength = wordLength.slice(0, 90);
 
-            let titleLength = recentPost.title;
-            titleLength = titleLength.slice(0, 30);
 
-            recentPostHolder += `
-            <div class="col-lg-4 col-md-6 mb-5">
-            <div class="post-body">
-                <div class="img-post">
-                    <img src="img/post${recentPost.id}.jpg" alt="post images" style="border-radius:15px; height: 33vmax !important;" class="img-fluid w-100 post-images">
-                </div>
-                <h5 class="recentPost-title pt-2 pb-2 main-color fw-bold">${titleLength}</h5>
-                <p class="recentPost-body">${wordLength}</p>
-                <div class="btn-div d-flex justify-content-between ">
-                    <button class="btn btn-outline-dark" onclick="readMoreRecent(${recentPost.id})">Read More</button>
-                    <button onclick="updateRecentPost(${recentPost.id})" class="btn btn-dark" href="#form-section"> Update</button>
-                    <button class="btn btn-outline-dark" onclick="deletePostRecent(${recentPost.id})">Delete</button>
-                </div>
-            </div>
-        </div>
-            `
-        })
 
-        recentPostWrapper.innerHTML = recentPostHolder;
-}
-
-function deletePostRecent(id) {
-    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
-        method: 'DELETE',
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data)
-            recentBox = recentBox.filter(recentPost => recentPost.id !== id)
-            console.log(recentBox)
-            // use a function to display the UI
-            recentUI(recentBox) ;
-        })
-
-}
 
 
 
