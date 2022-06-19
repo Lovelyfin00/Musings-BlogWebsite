@@ -29,7 +29,6 @@ postForm.addEventListener('submit', createPost);
 
 function createPost(e) {
     e.preventDefault();
-    // console.log(title.value, body.value)
     fetch('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
         body: JSON.stringify({
@@ -158,7 +157,6 @@ function readMoreRecent(id) {
         .then((data) => {
             localStorage.setItem('viewedPost', JSON.stringify(data))
             window.location.href = 'read-more.html';
-            // console.log(data)
         });
 }
 
@@ -188,8 +186,6 @@ getFeaturedPosts();
 // Updating using PUT METHOD for Featured Posts
 
 function updatePost(id) {
-    console.log(id)
-
     fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
         method: 'PUT',
         body: JSON.stringify({
@@ -281,7 +277,7 @@ function readMore(id) {
             console.log(data)
             localStorage.setItem('viewedPost', JSON.stringify(data))
             window.location.href = 'read-more.html'
-            // console.log(data)
+ 
         });
 }
 
